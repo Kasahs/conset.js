@@ -1,0 +1,63 @@
+{
+  "name": "conset",
+  "version": "1.0.0",
+  "description": "conditional set in javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "nyc mocha --require ts-node/register --require source-map-support/register --recursive src/**/*.spec.ts",
+    "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
+    "build:ts": "tsc --project ./tsconfig.json"
+  },
+  "types": "./dist/conset.d.ts",
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      "**/*.spec.ts",
+      "**/*.d.ts"
+    ],
+    "include": [
+      "src/**/*.ts"
+    ],
+    "reporter": [
+      "html"
+    ],
+    "all": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kasahs/conset.js.git"
+  },
+  "keywords": [
+    "conditional",
+    "set",
+    "typescript",
+    "javascript",
+    "comparator",
+    "set"
+  ],
+  "author": "shasak",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Kasahs/conset.js/issues"
+  },
+  "homepage": "https://github.com/Kasahs/conset.js#readme",
+  "devDependencies": {
+    "@types/chai": "^4.0.4",
+    "@types/lodash": "^4.14.74",
+    "@types/mocha": "^2.2.43",
+    "@types/node": "^8.0.29",
+    "chai": "^4.1.2",
+    "codecov": "^2.3.0",
+    "istanbul": "^0.4.5",
+    "lodash": "^4.17.4",
+    "mocha": "^3.5.3",
+    "nyc": "^11.2.1",
+    "source-map-support": "^0.4.18",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.4.0"
+  },
+  "dependencies": {}
+}

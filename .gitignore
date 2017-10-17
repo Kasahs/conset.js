@@ -1,0 +1,15 @@
+#ignore node_modules
+node_modules/
+
+# Coverage directory used by tools like istanbul
+coverage
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+#editors
+.vscode/
+
+#env
+.env
