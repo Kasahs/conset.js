@@ -1,5 +1,5 @@
 import { expect } from "chai"
-import { conset, Conset } from "./conset"
+import * as conset from "./conset"
 
 interface DummyItem {
   test: string
@@ -13,7 +13,7 @@ const dummy = <T>(key: string, data: T[]) => {
   }
 }
 
-const isInstanceOfConset = <T>(obj: any): obj is Conset<T> => {
+const isInstanceOfConset = <T>(obj: any): obj is conset.Conset<T> => {
   return "map" in obj && "order" in obj && "comparator" in obj
 }
 
