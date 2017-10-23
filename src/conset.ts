@@ -36,16 +36,13 @@ export namespace conset {
   }
 
   export const add = <T>(item: T, conset: Conset<T>): Conset<T> => {
-	remove(item, conset)
+    remove(item, conset)
     conset.map[conset.comparator(item)] = item
     conset.order.push(conset.comparator(item))
     return conset
   }
 
-  export const contains = <T>(
-    item: T,
-    conset: Conset<T>
-  ): boolean => {
+  export const contains = <T>(item: T, conset: Conset<T>): boolean => {
     return conset.map[conset.comparator(item)] !== undefined
   }
 
@@ -56,5 +53,4 @@ export namespace conset {
     })
     return res
   }
-
 }
