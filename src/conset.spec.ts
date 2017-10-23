@@ -108,20 +108,34 @@ describe("add function", () => {
 
     describe("constains function", () => {
         it("should return true if value exists, otherwise false", () => {
-            let myset = conset.create((item:DummyItem):string => {
-                return item['test']
-            }, [
-                {test: "a", data: [1]},
-                {test: "b", data: [1,2]},
-                {test: "a", data: [1,2,3]},
-                {test: "c", data: [1,2,3, 4]}
-            ])
+            let myset = dummySet()
 
             expect(conset.contains({test: "a", data: [1]}, myset)).to.be.equal(true)
             expect(conset.contains({test: "x", data: [1]}, myset)).to.be.equal(false)
             
         })
     })
-    
+})
 
+describe("testing getItems function", () => {
+    it("should return all items in set in order", () => {
+        let myset = conset.create((item:DummyItem):string => {
+            return item['test']
+        })
+        
+        conset.add(dummy('x', [1,2,3]), myset)
+        conset.add(dummy('y', [5,6,7]), myset)
+        conset.add(dummy('z', [5,6,7]), myset)
+        let items = conset.getItems(myset)
+        expect(items.length).to.be.equal(myset.order.length)
+        /*check  order*/
+        let keys = items.map(item => {
+            return item['test']
+        })
+
+        expect(keys.indexOf('x')).to.be.equal(0)
+        expect(keys.indexOf('y')).to.be.equal(1)
+        expect(keys.indexOf('z')).to.be.equal(2)
+
+    })
 })
