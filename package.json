@@ -2,11 +2,12 @@
   "name": "conset",
   "version": "1.0.0",
   "description": "conditional set in javascript",
-  "main": "index.js",
+  "main": "conset.ts",
   "scripts": {
     "test": "nyc mocha --require ts-node/register --require source-map-support/register --recursive src/**/*.spec.ts",
     "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
-    "build:ts": "tsc --project ./tsconfig.json"
+    "build:ts": "tsc --project ./tsconfig.json",
+    "prepublishOnly": "npm run build:ts"
   },
   "types": "./dist/conset.d.ts",
   "nyc": {
@@ -46,18 +47,18 @@
   "homepage": "https://github.com/Kasahs/conset.js#readme",
   "devDependencies": {
     "@types/chai": "^4.0.4",
-    "@types/lodash": "^4.14.74",
+    "@types/lodash": "^4.14.78",
     "@types/mocha": "^2.2.43",
-    "@types/node": "^8.0.29",
+    "@types/node": "^8.0.46",
     "chai": "^4.1.2",
     "codecov": "^2.3.0",
     "istanbul": "^0.4.5",
     "lodash": "^4.17.4",
     "mocha": "^3.5.3",
-    "nyc": "^11.2.1",
+    "nyc": "^11.3.0",
     "source-map-support": "^0.4.18",
     "ts-node": "^3.3.0",
-    "typescript": "^2.4.0"
+    "typescript": "^2.5.3"
   },
   "dependencies": {}
 }
