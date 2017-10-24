@@ -1,8 +1,8 @@
 {
   "name": "conset",
   "version": "1.0.1",
-  "description": "conditional set in javascript",
-  "main": "conset.ts",
+  "description": "conditional ordered set written in typescript",
+  "main": "dist/conset.js",
   "scripts": {
     "test": "nyc mocha --require ts-node/register --require source-map-support/register --recursive src/**/*.spec.ts",
     "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
@@ -37,7 +37,10 @@
     "typescript",
     "javascript",
     "comparator",
-    "set"
+    "set",
+    "conset",
+    "cset",
+    "key set"
   ],
   "author": "shasak",
   "license": "MIT",
