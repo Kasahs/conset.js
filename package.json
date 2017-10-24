@@ -1,6 +1,6 @@
 {
   "name": "conset",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "conditional set in javascript",
   "main": "conset.ts",
   "scripts": {
