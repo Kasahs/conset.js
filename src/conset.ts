@@ -1,34 +1,34 @@
 import { removeArrayItem } from "./utils"
 
-type Comparator<T> = (item: T) => string
+type HashFunction<T> = (item: T) => string
 
 interface Conset<T> {
   map: Object
   order: string[]
-  comparator: Comparator<T>
+  hashFunction: HashFunction<T>
 }
 
 const create = <T>(
-  comparator: Comparator<T>,
-  arr: T[] = []
+  hashFunction: HashFunction<T>,
+  initialItems: T[] = []
 ): Conset<T> => {
   let conset = {
     map: {},
     order: [],
-    comparator: comparator
+    hashFunction: hashFunction
   }
-  arr.forEach((item: T) => {
+  initialItems.forEach((item: T) => {
     add(item, conset)
   })
   return conset
 }
 
 const remove = <T>(item: T, conset: Conset<T>): Conset<T> => {
-  let itemIdx = conset.order.indexOf(conset.comparator(item))
+  let itemIdx = conset.order.indexOf(conset.hashFunction(item))
   let hasItem = itemIdx > -1
 
   if (hasItem) {
-    delete conset.map[conset.comparator(item)]
+    delete conset.map[conset.hashFunction(item)]
     conset.order = removeArrayItem(conset.order, itemIdx)
   }
   return conset
@@ -36,13 +36,13 @@ const remove = <T>(item: T, conset: Conset<T>): Conset<T> => {
 
 const add = <T>(item: T, conset: Conset<T>): Conset<T> => {
   remove(item, conset)
-  conset.map[conset.comparator(item)] = item
-  conset.order.push(conset.comparator(item))
+  conset.map[conset.hashFunction(item)] = item
+  conset.order.push(conset.hashFunction(item))
   return conset
 }
 
 const contains = <T>(item: T, conset: Conset<T>): boolean => {
-  return conset.map[conset.comparator(item)] !== undefined
+  return conset.map[conset.hashFunction(item)] !== undefined
 }
 
 const getItems = <T>(conset: Conset<T>) => {
@@ -53,4 +53,4 @@ const getItems = <T>(conset: Conset<T>) => {
   return res
 }
 
-export { Comparator, Conset, create, add, remove, contains, getItems }
+export { HashFunction, Conset, create, add, remove, contains, getItems }

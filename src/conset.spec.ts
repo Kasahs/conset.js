@@ -14,7 +14,7 @@ const dummy = <T>(key: string, data: T[]) => {
 }
 
 const isInstanceOfConset = <T>(obj: any): obj is conset.Conset<T> => {
-  return "map" in obj && "order" in obj && "comparator" in obj
+  return "map" in obj && "order" in obj && "hashFunction" in obj
 }
 
 const dummySet = () => {
@@ -33,7 +33,7 @@ const dummySet = () => {
 }
 
 describe("create function", () => {
-  it("should create an empty conset if only comparator provided", () => {
+  it("should create an empty conset if only hashFunction provided", () => {
     let myset = conset.create((item: DummyItem): string => {
       return item["test"]
     })
