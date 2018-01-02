@@ -1,3 +1,4 @@
+[![npm](https://img.shields.io/npm/dm/localeval.svg)](https://www.npmjs.com/package/conset)
 # conset.js  
 An ordered conditional set (you can provide your own hash) for typescript/javascript
 
