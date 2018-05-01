@@ -2,7 +2,7 @@
   "name": "conset",
   "version": "2.0.1",
   "description": "An ordered conditional set (you can provide your own hash) for typescript/javascript",
-  "main": "dist/conset.js",
+  "main": "./dist/conset.js",
   "scripts": {
     "test": "nyc mocha --require ts-node/register --require source-map-support/register --recursive src/**/*.spec.ts",
     "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
