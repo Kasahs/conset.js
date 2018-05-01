@@ -7,6 +7,7 @@ An ordered conditional set (you can provide your own hash) for typescript/javasc
 * Maintain order.
 * Newly added values override existing ones and update order.
 * Barebones functional API.
+* get intersection
 * [TODO] append and prepend.
 
 ### Usage
@@ -25,9 +26,9 @@ function myhash(item:MyItem):string {
 
 let myset = conset.create(myhash)
 
-conset.add({id: 1, data: ["whatever", "something"]}, myset)
-conset.add({id: 2, data: ["something", "whatever"]}, myset)
-conset.add({id: 3, data: ["something", "whatever", "balls"]}, myset)
+conset.add(myset, {id: 1, data: ["whatever", "something"]})
+conset.add(myset, {id: 2, data: ["something", "whatever"]})
+conset.add(myset, {id: 3, data: ["something", "whatever", "balls"]})
 
 conset.getItems(myset)
 /* 
@@ -38,15 +39,32 @@ conset.getItems(myset)
 ] 
 */
 
-conset.contains({id: '3'}, myset) 
-// true
-conset.remove({id: 3}, myset) 
+conset.contains(myset, {id: '3'}) 
+/*
+true
+*/
+conset.remove(myset, {id: 3}) 
 conset.getItems(myset)
 /* 
 [
 	{id: 1, data: ["whatever", "something"]}
 	{id: 2, data: ["something", "whatever"]}
 ] 
+*/
+
+for(let item of conset.iter(myset)) {
+	console.dir(item)
+}
+/*
+{id: 1, data: ["whatever", "something"]}
+{id: 2, data: ["something", "whatever"]}
+*/
+
+var c = conset.create((item) => {return item['a']}, [{a:1}, {a:2}, {a:7}])
+var d = conset.create((item) => {return item['a']}, [{a:1}, {a:2}, {a:3}])
+conset.getItems(conset.intersect(c,d))
+/*
+[ { a: 1 }, { a: 2 } ]
 */
 ```
 
@@ -59,9 +77,12 @@ interface Conset<T> {
     hashFunction: HashFunction<T>;
 }
 declare const create: <T>(hashFunction: HashFunction<T>, initialItems?: T[]) => Conset<T>;
-declare const remove: <T>(item: T, conset: Conset<T>) => Conset<T>;
-declare const add: <T>(item: T, conset: Conset<T>) => Conset<T>;
-declare const contains: <T>(item: T, conset: Conset<T>) => boolean;
+declare function iter<T>(conset: Conset<T>): IterableIterator<T>;
+declare const remove: <T>(conset: Conset<T>, item: T) => Conset<T>;
+declare const add: <T>(conset: Conset<T>, item: T) => Conset<T>;
+declare const contains: <T>(conset: Conset<T>, item: T) => boolean;
 declare const getItems: <T>(conset: Conset<T>) => T[];
+declare const size: <T>(conset: Conset<T>) => number;
+declare const intersect: <T>(smaller: Conset<T>, larger: Conset<T>) => Conset<T>;
 ```
 
