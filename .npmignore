@@ -1,4 +1,6 @@
-
+# ignore ts src and conf
+.tsconfig.json
+src/
 
 # ignore coverage
 coverage/
