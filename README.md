@@ -7,8 +7,7 @@ An ordered conditional set (you can provide your own hash) for typescript/javasc
 * Maintain order.
 * Newly added values override existing ones and update order.
 * Barebones functional API.
-* get intersection
-* [TODO] append and prepend.
+* compute intersection and union
 
 ### Usage
 
@@ -66,6 +65,13 @@ conset.getItems(conset.intersect(c,d))
 /*
 [ { a: 1 }, { a: 2 } ]
 */
+var d = conset.create((item) => {return item['a']}, [{a:1}, {a:2}, {a:3}, {a:9}, {a:10}])
+var c = conset.create((item) => {return item['a']}, [{a:1}, {a:2}, {a:7}])
+conset.getItems(conset.union(c,d))
+/*
+[ { a: 3 }, { a: 9 }, { a: 10 }, { a: 1 }, { a: 2 }, { a: 7 } ]
+*/
+>
 ```
 
 ### API overview [TODO use JSDoc for this]
@@ -84,5 +90,7 @@ declare const contains: <T>(conset: Conset<T>, item: T) => boolean;
 declare const getItems: <T>(conset: Conset<T>) => T[];
 declare const size: <T>(conset: Conset<T>) => number;
 declare const intersect: <T>(smaller: Conset<T>, larger: Conset<T>) => Conset<T>;
+declare const copy: <T>(conset: Conset<T>) => Conset<T>;
+declare const union: <T>(smaller: Conset<T>, larger: Conset<T>) => Conset<T>;
 ```
 

@@ -24,7 +24,7 @@ const create = <T>(
   return conset
 }
 
-function* iter<T>(conset: Conset<T>): IterableIterator<T> {
+const iter = function* <T>(conset: Conset<T>): IterableIterator<T> {
   for (let i = 0; i < conset.order.length; i++) {
     yield conset.map[conset.order[i]]
   }
@@ -79,6 +79,21 @@ const intersect = <T>(smaller: Conset<T>, larger: Conset<T>): Conset<T> => {
   return intersection
 }
 
+const copy = <T>(conset: Conset<T>) => {
+  return Object.assign({}, conset)
+}
+
+const union = <T>(smaller: Conset<T>, larger: Conset<T>): Conset<T> => {
+  if (size(smaller) > size(larger)) {
+    ;[smaller, larger] = [larger, smaller]
+  }
+  let union: Conset<T> = copy(larger)
+  for(let item of iter(smaller)){
+    add(union, item)
+  }
+  return union
+}
+
 export {
   HashFunction,
   Conset,
@@ -88,6 +103,8 @@ export {
   contains,
   getItems,
   size,
+  iter,
+  copy,
   intersect,
-  iter
+  union
 }
