@@ -55,14 +55,14 @@ describe("remove function", () => {
   it("should remove the item from map and order", () => {
     let myset = dummySet()
     expect(myset.map["a"]).to.be.not.undefined
-    conset.remove({ test: "a" }, myset)
+    conset.remove(myset, { test: "a" })
     expect(myset.map["a"]).to.be.undefined
   })
   it("should fail silently if item not present", () => {
     let myset = dummySet()
     let originalLength = myset.order.length
 
-    expect(conset.remove({ test: "key-not-present" }, myset)).to.not.throw
+    expect(conset.remove(myset, { test: "key-not-present" })).to.not.throw
     expect(myset.map["key-not-present"]).to.be.undefined
     expect(myset.order.length).to.be.equal(originalLength)
   })
@@ -74,7 +74,7 @@ describe("add function", () => {
       return item["test"]
     })
     expect(myset.order.length).to.be.equal(0)
-    conset.add(dummy("key1", [1, 2, 3, 4]), myset)
+    conset.add(myset, dummy("key1", [1, 2, 3, 4]))
     expect(Object.keys(myset.map).length).to.be.equal(1)
     expect(myset.order.length).to.be.equal(1)
   })
@@ -84,9 +84,9 @@ describe("add function", () => {
       return item["test"]
     })
 
-    conset.add(dummy("x", [1, 2, 3]), myset)
-    conset.add(dummy("y", [5, 6, 7]), myset)
-    conset.add(dummy("z", [5, 6, 7]), myset)
+    conset.add(myset, dummy("x", [1, 2, 3]))
+    conset.add(myset, dummy("y", [5, 6, 7]))
+    conset.add(myset, dummy("z", [5, 6, 7]))
     /*check initial order*/
     expect(myset.order.indexOf("x")).to.be.equal(0)
     expect(myset.order.indexOf("y")).to.be.equal(1)
@@ -94,7 +94,7 @@ describe("add function", () => {
 
     /* ensure value is overriden */
     expect(myset.map["x"].data.length).to.be.equal(3)
-    conset.add(dummy("x", [1]), myset)
+    conset.add(myset, dummy("x", [1]))
     expect(myset.map["x"].data.length).to.be.equal(1)
 
     /* ensure order is changed */
@@ -107,9 +107,9 @@ describe("add function", () => {
     it("should return true if value exists, otherwise false", () => {
       let myset = dummySet()
 
-      expect(conset.contains({ test: "a", data: [1] }, myset))
+      expect(conset.contains(myset, { test: "a", data: [1] }))
         .to.be.equal(true)
-      expect(conset.contains({ test: "x", data: [1] }, myset))
+      expect(conset.contains(myset, { test: "x", data: [1] }))
         .to.be.equal(false)
     })
   })
@@ -121,9 +121,9 @@ describe("testing getItems function", () => {
       return item["test"]
     })
 
-    conset.add(dummy("x", [1, 2, 3]), myset)
-    conset.add(dummy("y", [5, 6, 7]), myset)
-    conset.add(dummy("z", [5, 6, 7]), myset)
+    conset.add(myset, dummy("x", [1, 2, 3]))
+    conset.add(myset, dummy("y", [5, 6, 7]))
+    conset.add(myset, dummy("z", [5, 6, 7]))
     let items = conset.getItems(myset)
     expect(items.length).to.be.equal(myset.order.length)
     /*check  order*/
