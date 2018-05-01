@@ -6,21 +6,29 @@ interface Conset<T> {
   map: Object
   order: string[]
   hashFunction: HashFunction<T>
+  
 }
 
 const create = <T>(
   hashFunction: HashFunction<T>,
   initialItems: T[] = []
 ): Conset<T> => {
-  let conset = {
+  let conset: Conset<T> = {
     map: {},
     order: [],
-    hashFunction: hashFunction
+    hashFunction: hashFunction,
   }
+  
   initialItems.forEach((item: T) => {
     add(item, conset)
   })
   return conset
+}
+
+function* iter<T>(conset:Conset<T>): IterableIterator<T> {
+  for(let i=0; i<conset.order.length; i++){
+    yield conset.map[conset.order[i]]
+  }
 }
 
 const remove = <T>(item: T, conset: Conset<T>): Conset<T> => {
@@ -41,16 +49,22 @@ const add = <T>(item: T, conset: Conset<T>): Conset<T> => {
   return conset
 }
 
+const size = <T>(conset: Conset<T>): number => {
+  return conset.order.length
+}
+
 const contains = <T>(item: T, conset: Conset<T>): boolean => {
   return conset.map[conset.hashFunction(item)] !== undefined
 }
 
 const getItems = <T>(conset: Conset<T>) => {
   let res: T[] = []
-  conset.order.forEach(key => {
-    res.push(conset.map[key])
-  })
+  let items = iter(conset)
+  for(let item of items) {
+    res.push(item)
+  }
   return res
 }
+
 
 export { HashFunction, Conset, create, add, remove, contains, getItems }
